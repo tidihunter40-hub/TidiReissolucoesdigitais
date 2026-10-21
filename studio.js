@@ -19,7 +19,7 @@
     progress.innerHTML=['Marca','Negócio','Modelo','Personalize','Seu site'].map((label,i)=>`<button type="button" data-studio-step="${i+1}">0${i+1} <span>${label}</span></button>`).join('');
     const business=host.querySelector('.studio-step[data-step="2"]');
     business.querySelector('p').textContent='Pesquise e selecione o tipo de negócio. A prévia mostrará apenas conteúdo desse segmento.';
-    business.insertAdjacentHTML('beforeend','<label class="studio-field studio-search" for="studioSearch">QUAL É O SEU TIPO DE NEGÓCIO?<input id="studioSearch" type="search" placeholder="Pesquise por banda, rádio, loja de ração, móveis..."></label><div class="studio-categories" id="studioCategories" role="group" aria-label="Categorias"></div><p class="studio-search-count" id="studioSearchCount"></p>');
+    business.insertAdjacentHTML('beforeend','<label class="studio-field studio-search" for="studioSearch">QUAL É O SEU TIPO DE NEGÓCIO?<input id="studioSearch" type="search" placeholder="Pesquise por banda, rádio, loja de ração, móveis..."></label><div class="studio-categories" id="studioCategories" role="group" aria-label="Categorias"></div><p class="studio-search-count" id="studioSearchCount"></p><p class="studio-error" id="studioBusinessError" role="alert" hidden></p>');
     business.append($('studioSegments'));
     const model=document.createElement('div');model.className='studio-step';model.dataset.step='3';model.hidden=true;
     model.innerHTML='<h3>Experimente sua marca em outros modelos.</h3><p>Quatro composições reais para o seu negócio. As miniaturas já usam as cores da sua marca.</p><div class="studio-templates" id="studioTemplates" role="group" aria-label="Modelos disponíveis"></div>';
@@ -42,9 +42,14 @@
     $('studioSearch').addEventListener('input',event=>{state.query=event.target.value;if(state.query.trim())state.category='Todos';renderSegments();});
   }
   function setColorMode(mode){state.mode=mode;if(mode==='auto'){state.primary=state.auto.primary;state.secondary=state.auto.secondary;}update();}
-  function renderSegments(){
+  function visibleSegments(){
     const q=state.query.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    const filtered=data.segments.filter(s=>s.active&&(state.category==='Todos'||s.category===state.category)&&s.name.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q));
+    return data.segments.filter(s=>s.active&&(state.category==='Todos'||s.category===state.category)&&s.name.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q));
+  }
+  function showBusinessError(message){const businessError=$('studioBusinessError');businessError.textContent=message;businessError.hidden=!message;}
+  function renderSegments(){
+    const filtered=visibleSegments();
+    showBusinessError('');
     $('studioCategories').innerHTML=data.categories.map(c=>`<button type="button" data-category="${safe(c)}" aria-pressed="${state.category===c}">${safe(c)}</button>`).join('');
     $('studioSegments').innerHTML=filtered.map(s=>`<button type="button" data-segment="${s.id}" aria-pressed="${s.id===state.segment}"><span aria-hidden="true">${s.icon}</span><strong>${safe(s.name)}</strong><small>${safe(s.hint)}</small></button>`).join('');
     $('studioSearchCount').textContent=filtered.length?`${filtered.length} ${filtered.length===1?'segmento disponível':'segmentos disponíveis'}`:'Nenhum segmento disponível para esta busca.';
@@ -79,8 +84,19 @@
   }
   function step(number){
     const target=Math.max(1,Math.min(5,number));
-    if(target>2&&!state.segment){state.step=2;status.textContent='Escolha primeiro o seu tipo de negócio.';}
-    else state.step=target;
+    if(target>2&&(!state.segment||(state.step===2&&!visibleSegments().some(x=>x.id===state.segment)))){
+      const choices=state.step===2?visibleSegments():[];
+      if(choices.length===1)selectSegment(choices[0].id);
+      else{
+        state.step=2;
+        showBusinessError(choices.length?'Selecione um tipo de negócio para continuar.':'Nenhum negócio encontrado. Tente outra busca ou categoria.');
+        status.textContent='Escolha primeiro o seu tipo de negócio.';
+        renderControls();
+        $('studioSegments').querySelector('button')?.focus();
+        return;
+      }
+    }
+    state.step=target;
     renderControls();
     result.hidden=state.step!==5;
     if(state.step===5)updateContact();
@@ -98,6 +114,7 @@
   function selectSegment(id){
     const chosen=data.segments.find(x=>x.id===id&&x.active);
     if(!chosen)return;
+    showBusinessError('');
     state.segment=id;state.template=data.templates.find(x=>x.segment===id&&x.active)?.id||null;
     if(!state.nameProvided){state.name=chosen.sample;$('studioBusinessName').value=state.name;}
     update();startPreview();status.textContent='Prévia atualizada para '+segment().name+'.';
@@ -164,7 +181,7 @@
   drop.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();logoInput.click();}});
   $('studioReplace').addEventListener('click',()=>logoInput.click());$('studioRemove').addEventListener('click',removeLogo);
   $('studioBusinessName').addEventListener('input',event=>{state.name=event.target.value;state.nameProvided=!!state.name.trim();update();});
-  $('studioCategories').addEventListener('click',event=>{const button=event.target.closest('[data-category]');if(button){state.category=button.dataset.category;renderSegments();}});
+  $('studioCategories').addEventListener('click',event=>{const button=event.target.closest('[data-category]');if(button){state.category=button.dataset.category;renderSegments();const choices=visibleSegments();if(choices.length===1)selectSegment(choices[0].id);}});
   $('studioSegments').addEventListener('click',event=>{const button=event.target.closest('[data-segment]');if(button)selectSegment(button.dataset.segment);});
   $('studioTemplates').addEventListener('click',event=>{const button=event.target.closest('[data-template]');if(button){state.template=button.dataset.template;update();}});
   $('studioStyles').addEventListener('click',event=>{const button=event.target.closest('[data-style]');if(button){state.style=button.dataset.style;update();}});
