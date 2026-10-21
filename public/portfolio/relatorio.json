@@ -1,0 +1,267 @@
+{
+  "capturedAt": "2026-10-21T09:42:45.532Z",
+  "method": "Chrome com API Playwright do navegador Codex; capturas originais convertidas com Sharp",
+  "projects": {
+    "correia": {
+      "name": "Correia Tecnologia",
+      "url": "https://www.correiatecnologia.com.br/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/correia-desktop.webp",
+        "bytes": 149762,
+        "width": 1440,
+        "height": 900,
+        "title": "Correia Tecnologia | Ponto Facial e Controle de Acesso em Salvador BA",
+        "finalUrl": "https://www.correiatecnologia.com.br/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/correia-mobile.webp",
+        "bytes": 45262,
+        "width": 390,
+        "height": 844,
+        "title": "Correia Tecnologia | Ponto Facial e Controle de Acesso em Salvador BA",
+        "finalUrl": "https://www.correiatecnologia.com.br/"
+      }
+    },
+    "atacarejo": {
+      "name": "Atacarejo dos Móveis",
+      "url": "https://www.atacarejomoveis.com.br/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/atacarejo-desktop.webp",
+        "bytes": 93908,
+        "width": 1440,
+        "height": 900,
+        "title": "Atacarejo dos Móveis — móveis para todos os momentos",
+        "finalUrl": "https://www.atacarejomoveis.com.br/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/atacarejo-mobile.webp",
+        "bytes": 47330,
+        "width": 390,
+        "height": 844,
+        "title": "Atacarejo dos Móveis — móveis para todos os momentos",
+        "finalUrl": "https://www.atacarejomoveis.com.br/"
+      }
+    },
+    "jmstudio": {
+      "name": "JMStudio",
+      "url": "https://jmstudio-amber.vercel.app/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/jmstudio-desktop.webp",
+        "bytes": 170900,
+        "width": 1440,
+        "height": 900,
+        "title": "JMSTUDIO | Sua música no próximo nível",
+        "finalUrl": "https://jmstudio-amber.vercel.app/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/jmstudio-mobile.webp",
+        "bytes": 52734,
+        "width": 390,
+        "height": 844,
+        "title": "JMSTUDIO | Sua música no próximo nível",
+        "finalUrl": "https://jmstudio-amber.vercel.app/"
+      }
+    },
+    "godoy": {
+      "name": "Godoy Estética Boutique",
+      "url": "https://godoy-aura-suite.vercel.app/",
+      "note": "Somente a tela pública de autenticação está disponível.",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/godoy-desktop.webp",
+        "bytes": 94866,
+        "width": 1440,
+        "height": 900,
+        "title": "Acesso seguro — Godoy Estética Boutique",
+        "finalUrl": "https://godoy-aura-suite.vercel.app/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/godoy-mobile.webp",
+        "bytes": 29164,
+        "width": 390,
+        "height": 844,
+        "title": "Acesso seguro — Godoy Estética Boutique",
+        "finalUrl": "https://godoy-aura-suite.vercel.app/"
+      }
+    },
+    "rifaplay": {
+      "name": "RifaPlay",
+      "url": "https://rifaplay.online/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/rifaplay-desktop.webp",
+        "bytes": 113560,
+        "width": 1440,
+        "height": 900,
+        "title": "RifaPlay — Rifas online",
+        "finalUrl": "https://rifaplay.online/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/rifaplay-mobile.webp",
+        "bytes": 48082,
+        "width": 390,
+        "height": 844,
+        "title": "RifaPlay — Rifas online",
+        "finalUrl": "https://rifaplay.online/"
+      }
+    },
+    "gosyxp": {
+      "name": "GoSyXP Finance",
+      "url": "https://hunter-finance-ecru.vercel.app/",
+      "note": "Somente a tela pública de acesso restrito está disponível.",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/gosyxp-desktop.webp",
+        "bytes": 85096,
+        "width": 1440,
+        "height": 900,
+        "title": "GoSyXP | Tide Reis — Software financeiro inteligente",
+        "finalUrl": "https://hunter-finance-ecru.vercel.app/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/gosyxp-mobile.webp",
+        "bytes": 33996,
+        "width": 390,
+        "height": 844,
+        "title": "GoSyXP | Tide Reis — Software financeiro inteligente",
+        "finalUrl": "https://hunter-finance-ecru.vercel.app/"
+      }
+    },
+    "samba": {
+      "name": "Samba do Xandy",
+      "url": "https://www.sambadoxandy.com.br/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/samba-desktop.webp",
+        "bytes": 79090,
+        "width": 1440,
+        "height": 900,
+        "title": "Samba do Xandy - O Samba que Contagia a Bahia | Shows ao Vivo",
+        "finalUrl": "https://www.sambadoxandy.com.br/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/samba-mobile.webp",
+        "bytes": 36354,
+        "width": 390,
+        "height": 844,
+        "title": "Samba do Xandy - O Samba que Contagia a Bahia | Shows ao Vivo",
+        "finalUrl": "https://www.sambadoxandy.com.br/"
+      }
+    },
+    "blackout": {
+      "name": "Blackout Infor Games",
+      "url": "https://blackoutinforgames.online/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/blackout-desktop.webp",
+        "bytes": 175402,
+        "width": 1440,
+        "height": 900,
+        "title": "BLACKOUT Infor Games | Catálogo Gamer",
+        "finalUrl": "https://blackoutinforgames.online/"
+      },
+      "mobile": {
+        "ok": false,
+        "error": "A página mobile pública renderiza uma camada escura sobre o conteúdo; captura não adequada para o portfólio."
+      }
+    },
+    "motopombal": {
+      "name": "Moto Pombal",
+      "url": "https://appmotoboy.vercel.app/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/motopombal-desktop.webp",
+        "bytes": 78148,
+        "width": 1440,
+        "height": 900,
+        "title": "MotoPombal | Mobilidade em Ribeira do Pombal",
+        "finalUrl": "https://appmotoboy.vercel.app/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/motopombal-mobile.webp",
+        "bytes": 58708,
+        "width": 390,
+        "height": 844,
+        "title": "MotoPombal | Mobilidade em Ribeira do Pombal",
+        "finalUrl": "https://appmotoboy.vercel.app/"
+      }
+    },
+    "pombalemprega": {
+      "name": "PombalEmprega",
+      "url": "https://pombal-emprega.vercel.app/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/pombalemprega-desktop.webp",
+        "bytes": 156518,
+        "width": 1440,
+        "height": 900,
+        "title": "PombalEmprega",
+        "finalUrl": "https://pombal-emprega.vercel.app/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/pombalemprega-mobile.webp",
+        "bytes": 51498,
+        "width": 390,
+        "height": 844,
+        "title": "PombalEmprega",
+        "finalUrl": "https://pombal-emprega.vercel.app/"
+      }
+    },
+    "mgborrachas": {
+      "name": "MG Borrachas",
+      "url": "https://mgborrachas.vercel.app/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/mgborrachas-desktop.webp",
+        "bytes": 145744,
+        "width": 1440,
+        "height": 900,
+        "title": "MG Borrachas | Artefatos de Borracha Direto da Fábrica",
+        "finalUrl": "https://mgborrachas.vercel.app/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/mgborrachas-mobile.webp",
+        "bytes": 44126,
+        "width": 390,
+        "height": 844,
+        "title": "MG Borrachas | Artefatos de Borracha Direto da Fábrica",
+        "finalUrl": "https://mgborrachas.vercel.app/"
+      }
+    },
+    "wesllen": {
+      "name": "Wesllen Imports",
+      "url": "https://www.wesllenimports.com.br/",
+      "desktop": {
+        "ok": true,
+        "file": "public/portfolio/wesllen-desktop.webp",
+        "bytes": 136950,
+        "width": 1440,
+        "height": 900,
+        "title": "Wesllen Imports | Camisas e Personalizados",
+        "finalUrl": "https://www.wesllenimports.com.br/"
+      },
+      "mobile": {
+        "ok": true,
+        "file": "public/portfolio/wesllen-mobile.webp",
+        "bytes": 47150,
+        "width": 390,
+        "height": 844,
+        "title": "Wesllen Imports | Camisas e Personalizados",
+        "finalUrl": "https://www.wesllenimports.com.br/"
+      }
+    }
+  }
+}

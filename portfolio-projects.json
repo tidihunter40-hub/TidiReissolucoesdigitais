@@ -1,0 +1,14 @@
+[
+  {"id":"correia","name":"Correia Tecnologia","url":"https://www.correiatecnologia.com.br/","category":"sites","description":"Presença digital da Correia Tecnologia."},
+  {"id":"atacarejo","name":"Atacarejo dos Móveis","url":"https://www.atacarejomoveis.com.br/","category":"lojas","description":"Vitrine online do Atacarejo dos Móveis."},
+  {"id":"jmstudio","name":"JMStudio","url":"https://jmstudio-amber.vercel.app/","category":"sites","description":"Site de apresentação do JMStudio."},
+  {"id":"godoy","name":"Godoy Estética Boutique","url":"https://godoy-aura-suite.vercel.app/","category":"sistemas","description":"Interface pública do sistema da Godoy Estética Boutique."},
+  {"id":"rifaplay","name":"RifaPlay","url":"https://rifaplay.online/","category":"plataformas","description":"Plataforma pública da RifaPlay."},
+  {"id":"gosyxp","name":"GoSyXP Finance","url":"https://hunter-finance-ecru.vercel.app/","category":"sistemas","description":"Interface pública do sistema financeiro GoSyXP."},
+  {"id":"samba","name":"Samba do Xandy","url":"https://www.sambadoxandy.com.br/","category":"sites","description":"Site oficial do Samba do Xandy."},
+  {"id":"blackout","name":"Blackout Infor Games","url":"https://blackoutinforgames.online/","category":"lojas","description":"Vitrine digital da Blackout Infor Games."},
+  {"id":"motopombal","name":"Moto Pombal","url":"https://appmotoboy.vercel.app/","category":"aplicativos","description":"Interface pública do aplicativo Moto Pombal."},
+  {"id":"pombalemprega","name":"PombalEmprega","url":"https://pombal-emprega.vercel.app/","category":"plataformas","description":"Plataforma pública do PombalEmprega."},
+  {"id":"mgborrachas","name":"MG Borrachas","url":"https://mgborrachas.vercel.app/","category":"sites","description":"Site de apresentação da MG Borrachas."},
+  {"id":"wesllen","name":"Wesllen Imports","url":"https://www.wesllenimports.com.br/","category":"lojas","description":"Vitrine online da Wesllen Imports."}
+]

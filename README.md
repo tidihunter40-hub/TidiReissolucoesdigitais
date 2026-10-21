@@ -8,8 +8,8 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 
 ## Estrutura
 
-- `index.html`: conteúdo, serviços, TR Lab, projetos conceituais, comparador, terminal e orçamento em etapas.
-- `styles.css`, `advanced.css`, `reference.css`, `compare.css`, `showcase.css`, `finish.css`: identidade neon, experiências interativas e composição responsiva.
+- `index.html`: conteúdo, serviços, TR Lab, portfólio de projetos reais, comparador, terminal e orçamento em etapas.
+- `styles.css`, `advanced.css`, `reference.css`, `compare.css`, `portfolio-projetos.css`, `finish.css`: identidade neon, experiências interativas e composição responsiva.
 - `script.js`, `advanced.js`: navegação, experiências interativas, WhatsApp e instalação.
 - `manifest.webmanifest`, `sw.js`, `offline.html`: recursos PWA.
 - `privacidade.html`: política de privacidade.
@@ -24,7 +24,7 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 
 - TR Lab com cinco demonstrações: quatro mini-sites responsivos (arquitetura, lançamento, loja e assistência), dashboard com períodos, design studio, simulação de PWA e monograma em CSS 3D. Os mini-sites são conceitos fictícios; a loja simula uma sacola local e os demais abrem detalhes demonstrativos. O PWA demonstrativo não instala um aplicativo real; a instalação do próprio site fica no rodapé quando o navegador oferece essa opção.
 - `assets/lab-architecture.webp`, `assets/lab-chair.webp` e `assets/lab-repair.webp`: imagens geradas para os exemplos conceituais do TR Lab. São carregadas sob demanda e não entram no pré-cache essencial do PWA.
-- Vitrine de seis conceitos navegáveis, incluindo identidade visual. Os dados de dashboard e projetos são fictícios e identificados como demonstração.
+- Portfólio de 12 projetos publicados, com capturas reais em desktop e celular, filtros por categoria e detalhes na própria página. O TR Lab permanece identificado como demonstração conceitual.
 - Seis cards de serviço com painel de detalhes e atalho de orçamento específico.
 - Comparador antes/depois com arraste, toque e teclado; navegação rápida com Ctrl/Cmd+K; TR System com seis comandos predefinidos.
 - Orçamento em quatro etapas, com serviço, recursos, descrição e revisão antes de abrir o WhatsApp. O formulário não envia dados a um servidor.
@@ -45,7 +45,9 @@ O CNPJ passou na verificação matemática dos dígitos verificadores. Isso não
 
 Na Vercel, selecione **Other**, use esta pasta como raiz, deixe o comando de build vazio e sirva a pasta raiz (`.`). Não há instalação de pacotes, arquivo de lock ou variáveis de ambiente necessárias. O Node.js é usado apenas para as verificações locais. A configuração está em `vercel.json`; não há reescrita genérica de rotas.
 
-Execute `python verify_site.py` (requer Pillow no ambiente de teste), `node verify_showcase.js`, `node verify_sw.js`, `node verify_terminal.js` e `node --check` nos quatro arquivos JavaScript antes de publicar.
+Para atualizar as capturas, instale as dependências de desenvolvimento com `npm install` e execute `npm run capturar-portfolio`. O script usa Chrome por meio do Playwright e Sharp, e grava os resultados em `public/portfolio/relatorio.json`. Revise visualmente cada nova captura antes de publicar.
+
+Execute `python verify_site.py` (requer Pillow no ambiente de teste), `node verify_sw.js`, `node verify_terminal.js` e `node --check` nos arquivos JavaScript ativos antes de publicar.
 
 O domínio publicado é `https://trdigital.vercel.app/`. Canonical, Open Graph, robots e sitemap apontam para esse endereço. O service worker mantém apenas recursos estáticos públicos e as páginas conhecidas no cache. A instalação continua dependente do suporte do navegador; no iOS, o site mostra instruções de Adicionar à Tela de Início.
 

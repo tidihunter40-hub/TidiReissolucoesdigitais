@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "capturar-portfolio": "node scripts/capturar-portfolio.ts"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0",
+    "sharp": "^0.34.0"
+  }
+}

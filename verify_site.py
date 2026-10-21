@@ -58,9 +58,27 @@ def main():
             assert reference[1:] in counts, f"Missing anchor: {reference}"
         elif not re.match(r"^[a-z][a-z0-9+.-]*:", reference):
             assert (ROOT / reference.split("?", 1)[0]).exists(), f"Missing asset: {reference}"
-    showcase_tabs = [tab for tab in document.tabs if tab.get("aria-controls") == "demo-panel"]
     lab_tabs = [tab for tab in document.tabs if tab.get("aria-controls") == "labPreview"]
-    assert len(showcase_tabs) == 6
+    assert 'id="portfolioGrid"' in html and 'id="portfolioFilters"' in html
+    assert 'id="portfolioDialog"' in html
+    projects = json.loads((ROOT / "portfolio-projects.json").read_text(encoding="utf-8"))
+    assert len(projects) == 12
+    assert len({project["id"] for project in projects}) == 12
+    assert all(project["url"].startswith("https://") for project in projects)
+    report = json.loads((ROOT / "public/portfolio/relatorio.json").read_text(encoding="utf-8"))["projects"]
+    assert set(report) == {project["id"] for project in projects}
+    for project in projects:
+        entry = report[project["id"]]
+        assert entry["url"] == project["url"]
+        for device, expected_size in (("desktop", (1440, 900)), ("mobile", (390, 844))):
+            capture = entry[device]
+            if not capture["ok"]:
+                assert capture.get("error"), f"Missing error note: {project['id']} {device}"
+                continue
+            image_path = ROOT / capture["file"]
+            assert image_path.is_file(), f"Missing portfolio image: {image_path}"
+            with Image.open(image_path) as image:
+                assert image.format == "WEBP" and image.size == expected_size
     assert len(lab_tabs) == 5
     assert len(re.findall(r'class="service-card', html)) == 6
     assert len(re.findall(r'name="service"', html)) == 8
@@ -100,7 +118,7 @@ def main():
     assert "Serviço: " in (ROOT / "advanced.js").read_text(encoding="utf-8")
     ignored = set((ROOT / ".vercelignore").read_text(encoding="utf-8").splitlines())
     runtime = list(ROOT.glob("*.html")) + list(ROOT.glob("*.css")) + [
-        ROOT / name for name in ("script.js", "advanced.js", "showcase.js", "sw.js", "manifest.webmanifest")
+        ROOT / name for name in ("script.js", "advanced.js", "portfolio.js", "sw.js", "manifest.webmanifest")
     ]
     for source in runtime:
         for asset in set(re.findall(r"assets/[\w.-]+", source.read_text(encoding="utf-8"))):
@@ -109,7 +127,7 @@ def main():
     vercel = json.loads((ROOT / "vercel.json").read_text(encoding="utf-8"))
     assert vercel["framework"] is None and vercel["outputDirectory"] == "."
     assert vercel["buildCommand"] == ""
-    print(f"OK: {len(document.sections)} seções, 6 serviços, 6 conceitos, 5 experiências de laboratório, 8 opções de orçamento, links locais, manifest e CNPJ.")
+    print(f"OK: {len(document.sections)} seções, 6 serviços, 12 projetos, 5 experiências de laboratório, 8 opções de orçamento, links locais, manifest e CNPJ.")
 
 
 if __name__ == "__main__":

@@ -4,6 +4,10 @@ AUDITORIA.md
 verify_site.py
 verify_showcase.js
 verify_sw.js
+.vercelignore
+package.json
+scripts/
+verify_portfolio.js
 .env
 .env.*
 
