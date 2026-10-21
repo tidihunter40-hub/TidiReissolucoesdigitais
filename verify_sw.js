@@ -57,6 +57,20 @@ async function main() {
   assert.deepEqual(await response, { asset: './privacidade.html' });
   response = null;
   listeners.fetch({
+    request: { url: 'https://example.test/lab-experience.html?demo=delivery', method: 'GET', mode: 'navigate' },
+    respondWith(value) { response = value; },
+    waitUntil() {},
+  });
+  assert.deepEqual(await response, { asset: './lab-experience.html' });
+  response = null;
+  listeners.fetch({
+    request: { url: 'https://example.test/studio-preview.html', method: 'GET', mode: 'navigate' },
+    respondWith(value) { response = value; },
+    waitUntil() {},
+  });
+  assert.deepEqual(await response, { asset: './studio-preview.html' });
+  response = null;
+  listeners.fetch({
     request: { url: 'https://example.test/index.html?private=1', method: 'GET', mode: 'navigate' },
     respondWith(value) { response = value; },
     waitUntil() {},

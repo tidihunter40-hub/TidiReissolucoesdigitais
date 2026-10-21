@@ -58,7 +58,19 @@ def main():
             assert reference[1:] in counts, f"Missing anchor: {reference}"
         elif not re.match(r"^[a-z][a-z0-9+.-]*:", reference):
             assert (ROOT / reference.split("?", 1)[0]).exists(), f"Missing asset: {reference}"
-    lab_tabs = [tab for tab in document.tabs if tab.get("aria-controls") == "labPreview"]
+    assert 'id="studioWorkspace"' in html and 'id="studioFrame"' in html
+    assert 'id="studioLogo"' in html and 'id="studioSegments"' in html and 'id="studioStyles"' in html
+    assert all((ROOT / name).is_file() for name in ("studio.css", "studio.js", "studio-data.js", "studio-colors.js", "studio-preview.html", "studio-preview.css", "studio-preview.js"))
+    studio_photos = list((ROOT / "assets/studio").glob("*.webp"))
+    assert len(studio_photos) == 20
+    for photo in studio_photos:
+        with Image.open(photo) as image:
+            assert image.format == "WEBP" and image.width >= 500 and image.height >= 300
+    assert 'id="labGroups"' in html and 'id="labSelection"' in html
+    assert 'id="labFrame"' in html and 'id="labFullscreen"' in html
+    lab_data = (ROOT / "lab-data.js").read_text(encoding="utf-8")
+    assert len(re.findall(r"\{id:'[a-z]+',group:", lab_data)) == 13
+    assert all((ROOT / name).is_file() for name in ("lab-experience.html", "lab-experience.css", "lab-experience.js", "lab-fixtures.js", "lab.js", "lab.css"))
     assert 'id="portfolioGrid"' in html and 'id="portfolioFilters"' in html
     assert 'id="portfolioDialog"' in html
     projects = json.loads((ROOT / "portfolio-projects.json").read_text(encoding="utf-8"))
@@ -79,7 +91,6 @@ def main():
             assert image_path.is_file(), f"Missing portfolio image: {image_path}"
             with Image.open(image_path) as image:
                 assert image.format == "WEBP" and image.size == expected_size
-    assert len(lab_tabs) == 5
     assert len(re.findall(r'class="service-card', html)) == 6
     assert len(re.findall(r'name="service"', html)) == 8
     assert cnpj_valid("69.340.664/0001-04")
@@ -117,17 +128,17 @@ def main():
     assert "SKIP_WAITING" in (ROOT / "sw.js").read_text(encoding="utf-8")
     assert "Serviço: " in (ROOT / "advanced.js").read_text(encoding="utf-8")
     ignored = set((ROOT / ".vercelignore").read_text(encoding="utf-8").splitlines())
-    runtime = list(ROOT.glob("*.html")) + list(ROOT.glob("*.css")) + [
-        ROOT / name for name in ("script.js", "advanced.js", "portfolio.js", "sw.js", "manifest.webmanifest")
-    ]
+    runtime = list(ROOT.glob("*.html")) + list(ROOT.glob("*.css")) + list(ROOT.glob("*.js")) + [ROOT / "manifest.webmanifest"]
     for source in runtime:
-        for asset in set(re.findall(r"assets/[\w.-]+", source.read_text(encoding="utf-8"))):
+        for asset in set(re.findall(r"assets/[\w/-]+\.(?:webp|png|jpg|svg)", source.read_text(encoding="utf-8"))):
             assert (ROOT / asset).is_file(), f"Missing runtime asset: {asset} ({source.name})"
             assert asset not in ignored, f"Runtime asset excluded from Vercel: {asset}"
     vercel = json.loads((ROOT / "vercel.json").read_text(encoding="utf-8"))
     assert vercel["framework"] is None and vercel["outputDirectory"] == "."
     assert vercel["buildCommand"] == ""
-    print(f"OK: {len(document.sections)} seções, 6 serviços, 12 projetos, 5 experiências de laboratório, 8 opções de orçamento, links locais, manifest e CNPJ.")
+    assert any(header == {"key": "X-Frame-Options", "value": "SAMEORIGIN"}
+               for route in vercel["headers"] for header in route["headers"]), "Local previews require same-origin frames"
+    print(f"OK: {len(document.sections)} seções, 6 serviços, 12 projetos, 13 demonstrações de laboratório, 8 opções de orçamento, links locais, manifest e CNPJ.")
 
 
 if __name__ == "__main__":

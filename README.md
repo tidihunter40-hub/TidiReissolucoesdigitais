@@ -9,8 +9,10 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 ## Estrutura
 
 - `index.html`: conteúdo, serviços, TR Lab, portfólio de projetos reais, comparador, terminal e orçamento em etapas.
-- `styles.css`, `advanced.css`, `reference.css`, `compare.css`, `portfolio-projetos.css`, `finish.css`: identidade neon, experiências interativas e composição responsiva.
-- `script.js`, `advanced.js`: navegação, experiências interativas, WhatsApp e instalação.
+- `styles.css`, `advanced.css`, `reference.css`, `compare.css`, `portfolio-projetos.css`, `finish.css`, `lab.css`, `studio.css`: identidade neon, experiências interativas e composição responsiva.
+- `script.js`, `advanced.js`, `lab.js`: navegação, showroom, WhatsApp e instalação.
+- `lab-experience.html`, `lab-experience.css`, `lab-experience.js`, `lab-data.js`, `lab-fixtures.js`: demonstrações conceituais isoladas, com dados fictícios e carregamento sob demanda na prévia.
+- `studio.js`, `studio-data.js`, `studio-colors.js`, `studio-preview.html`, `studio-preview.js`, `studio-preview.css`: simulador local com dez segmentos, quatro estilos e prévia isolada em iframe.
 - `manifest.webmanifest`, `sw.js`, `offline.html`: recursos PWA.
 - `privacidade.html`: política de privacidade.
 - `assets/`: identidade original fornecida e derivação transparente do monograma para o hero e ícone maskable do PWA.
@@ -22,9 +24,11 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 
 ## Experiências implementadas
 
-- TR Lab com cinco demonstrações: quatro mini-sites responsivos (arquitetura, lançamento, loja e assistência), dashboard com períodos, design studio, simulação de PWA e monograma em CSS 3D. Os mini-sites são conceitos fictícios; a loja simula uma sacola local e os demais abrem detalhes demonstrativos. O PWA demonstrativo não instala um aplicativo real; a instalação do próprio site fica no rodapé quando o navegador oferece essa opção.
-- `assets/lab-architecture.webp`, `assets/lab-chair.webp` e `assets/lab-repair.webp`: imagens geradas para os exemplos conceituais do TR Lab. São carregadas sob demanda e não entram no pré-cache essencial do PWA.
+- TidiReis Studio: upload local de logo PNG/JPG/WebP (até 5 MB), extração de cores no navegador, nome e paleta editáveis, dez segmentos e quatro composições visuais. A prévia permite navegar, trocar dispositivo/estilo, ampliar e testar ações ilustrativas. A mensagem comercial usa o WhatsApp já configurado no site. Nenhuma imagem do visitante é enviada ou salva em servidor.
+- TidiReis Experience Lab com 13 demonstrações: seis websites de identidades distintas, três painéis administrativos, Design Studio, delivery, transporte e apresentação interativa da marca oficial. Há prévia em larguras reais de desktop, tablet e celular, rolagem interna, reinício e tela cheia. Cada exemplo usa dados fictícios e interações locais; nenhum pedido, pagamento, atendimento, corrida ou agendamento é real. A instalação do próprio site fica no rodapé quando o navegador oferece essa opção.
+- `assets/lab-architecture.webp`, `assets/lab-chair.webp` e `assets/lab-repair.webp`: imagens geradas para os exemplos conceituais do TR Lab. As demonstrações são carregadas sob demanda na página, e seus arquivos essenciais ficam disponíveis no cache do PWA após a instalação do service worker.
 - Portfólio de 12 projetos publicados, com capturas reais em desktop e celular, filtros por categoria e detalhes na própria página. O TR Lab permanece identificado como demonstração conceitual.
+- As 20 fotos demonstrativas do Studio ficam em `assets/studio/` como WebP locais. São fotos do Unsplash, com uso comercial permitido pela [licença Unsplash](https://unsplash.com/license); os IDs de origem estão em `scripts/fetch_studio_images.py`. O simulador não depende do Unsplash em tempo de execução.
 - Seis cards de serviço com painel de detalhes e atalho de orçamento específico.
 - Comparador antes/depois com arraste, toque e teclado; navegação rápida com Ctrl/Cmd+K; TR System com seis comandos predefinidos.
 - Orçamento em quatro etapas, com serviço, recursos, descrição e revisão antes de abrir o WhatsApp. O formulário não envia dados a um servidor.
@@ -41,13 +45,21 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 
 O CNPJ passou na verificação matemática dos dígitos verificadores. Isso não equivale a consultar o cadastro oficial. Confirme esses dados com o titular antes de publicar.
 
+## Manutenção do TidiReis Studio
+
+- Adicione ou altere segmentos, títulos, textos e opções em `studio-data.js`, e crie a composição correspondente no registro `renderers` em `studio-preview.js`.
+- Ajuste os quatro estilos em `studio-preview.css`. A prévia usa iframe para impedir que o CSS dos modelos altere o site institucional.
+- Troque fotos em `assets/studio/`, mantendo os nomes `{segmento}-1.webp` e `{segmento}-2.webp`, ou atualize a função `photo` em `studio-preview.js`. Use apenas imagens com licença adequada.
+- As cores automáticas e as regras de contraste ficam em `studio-colors.js`; os seletores manuais estão em `studio.js`.
+- O botão comercial lê o número do link `data-wa="proposta"` já configurado no site. Ao atualizar o contato oficial, atualize esse link. As ações dentro dos modelos são ilustrativas e não fazem pedidos reais.
+
 ## Publicação
 
 Na Vercel, selecione **Other**, use esta pasta como raiz, deixe o comando de build vazio e sirva a pasta raiz (`.`). Não há instalação de pacotes, arquivo de lock ou variáveis de ambiente necessárias. O Node.js é usado apenas para as verificações locais. A configuração está em `vercel.json`; não há reescrita genérica de rotas.
 
 Para atualizar as capturas, instale as dependências de desenvolvimento com `npm install` e execute `npm run capturar-portfolio`. O script usa Chrome por meio do Playwright e Sharp, e grava os resultados em `public/portfolio/relatorio.json`. Revise visualmente cada nova captura antes de publicar.
 
-Execute `python verify_site.py` (requer Pillow no ambiente de teste), `node verify_sw.js`, `node verify_terminal.js` e `node --check` nos arquivos JavaScript ativos antes de publicar.
+Execute `python verify_site.py` (requer Pillow no ambiente de teste), `node verify_sw.js`, `node verify_terminal.js`, `node scripts/verify_lab.mjs`, `node scripts/verify_studio.mjs` e `node scripts/verify_portfolio.mjs` (os três últimos requerem Chrome local), além de `node --check` nos arquivos JavaScript ativos antes de publicar.
 
 O domínio publicado é `https://trdigital.vercel.app/`. Canonical, Open Graph, robots e sitemap apontam para esse endereço. O service worker mantém apenas recursos estáticos públicos e as páginas conhecidas no cache. A instalação continua dependente do suporte do navegador; no iOS, o site mostra instruções de Adicionar à Tela de Início.
 
