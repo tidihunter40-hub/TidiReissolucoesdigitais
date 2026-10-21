@@ -1,0 +1,22 @@
+# Arquivos de trabalho e verificações locais
+README.md
+AUDITORIA.md
+verify_site.py
+verify_showcase.js
+verify_sw.js
+.env
+.env.*
+
+# Fontes PNG preservadas localmente; o site usa cópias WebP sem perdas
+assets/hero-scene-v2.png
+assets/about-showroom-v2.png
+assets/lab-architecture.png
+assets/lab-chair.png
+assets/lab-repair.png
+assets/nova-side-table.png
+assets/nova-ceramic-lamp.png
+
+# Materiais originais não referenciados pelo site
+assets/about-showroom.png
+assets/logo-original.jpg
+assets/logo-hero.webp
