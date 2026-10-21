@@ -1,4 +1,4 @@
-const CACHE = 'tidireis-static-v20';
+const CACHE = 'tidireis-static-v21';
 const CORE = [
   './', './index.html', './offline.html', './privacidade.html',
   './styles.css', './advanced.css', './reference.css', './compare.css', './portfolio-projetos.css', './finish.css', './lab.css', './lab-experience.css', './lab-experience.html', './studio.css', './studio-preview.css', './studio-preview.html', './script.js', './advanced.js', './portfolio.js', './lab.js', './lab-data.js', './lab-fixtures.js', './lab-experience.js', './studio.js', './studio-data.js', './studio-colors.js', './studio-preview.js', './portfolio-projects.json', './public/portfolio/relatorio.json', './manifest.webmanifest',
