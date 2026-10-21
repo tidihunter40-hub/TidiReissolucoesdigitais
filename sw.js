@@ -1,8 +1,8 @@
-const CACHE = 'tidireis-static-v9';
+const CACHE = 'tidireis-static-v10';
 const CORE = [
   './', './index.html', './offline.html', './privacidade.html',
   './styles.css', './advanced.css', './reference.css', './compare.css', './showcase.css', './script.js', './advanced.js', './showcase.js', './manifest.webmanifest',
-  './assets/logo-tr.webp', './assets/logo-symbol-transparent.png', './assets/hero-scene-v2.webp',
+  './assets/logo-tr.webp', './assets/logo-symbol-transparent.png', './assets/hero-scene-v2.webp', './assets/compare-building.webp',
   './assets/icon-192.png', './assets/favicon.png',
   './assets/apple-touch-icon.png', './assets/icon-maskable.png', './assets/og-image.jpg'
 ];

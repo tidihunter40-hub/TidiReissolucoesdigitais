@@ -121,9 +121,41 @@
   }
   selectLab('site');
 
+  const compareStage = $('#compareStage');
   const compareRange = $('#compareRange');
-  function updateCompare() { const value = Number(compareRange.value); $('#compareAfter').style.clipPath = 'inset(0 0 0 ' + value + '%)'; $('#compareDivider').style.left = value + '%'; compareRange.setAttribute('aria-valuetext', value + '% da versão básica e ' + (100 - value) + '% da versão profissional'); }
-  compareRange.addEventListener('input', updateCompare); updateCompare();
+  function updateCompare() {
+    const value = Math.max(0, Math.min(100, Number(compareRange.value) || 0));
+    compareStage.style.setProperty('--compare-position', value + '%');
+    compareRange.setAttribute('aria-valuetext', value + '% da versão antiga e ' + (100 - value) + '% da versão nova');
+  }
+  function moveCompare(event) {
+    const bounds = compareStage.getBoundingClientRect();
+    if (!bounds.width) return;
+    compareRange.value = String(Math.round(Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width)) * 100));
+    updateCompare();
+  }
+  let comparePointer = null;
+  compareStage.addEventListener('pointerdown', event => {
+    if (event.button !== 0 || comparePointer !== null) return;
+    comparePointer = event.pointerId;
+    compareStage.setPointerCapture(event.pointerId);
+    compareRange.focus({ preventScroll: true });
+    moveCompare(event);
+  });
+  compareStage.addEventListener('pointermove', event => {
+    if (event.pointerId === comparePointer) moveCompare(event);
+  });
+  const endCompare = event => {
+    if (event.pointerId !== comparePointer) return;
+    if (event.type === 'pointerup') moveCompare(event);
+    comparePointer = null;
+    if (compareStage.hasPointerCapture(event.pointerId)) compareStage.releasePointerCapture(event.pointerId);
+  };
+  compareStage.addEventListener('pointerup', endCompare);
+  compareStage.addEventListener('pointercancel', endCompare);
+  compareStage.addEventListener('dragstart', event => event.preventDefault());
+  compareRange.addEventListener('input', updateCompare);
+  updateCompare();
 
   // Service details reuse the copy and commercial link already present in each card.
   const serviceDialog = $('#serviceDialog');
