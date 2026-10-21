@@ -7,6 +7,7 @@ verify_sw.js
 .vercelignore
 package.json
 scripts/
+assets/studio/IMAGE_PROMPTS.md
 verify_portfolio.js
 .env
 .env.*

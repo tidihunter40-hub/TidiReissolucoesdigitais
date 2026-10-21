@@ -62,7 +62,7 @@ def main():
     assert 'id="studioLogo"' in html and 'id="studioSegments"' in html and 'id="studioStyles"' in html
     assert all((ROOT / name).is_file() for name in ("studio.css", "studio.js", "studio-data.js", "studio-colors.js", "studio-preview.html", "studio-preview.css", "studio-preview.js"))
     studio_photos = list((ROOT / "assets/studio").glob("*.webp"))
-    assert len(studio_photos) == 20
+    assert len(studio_photos) >= 42
     for photo in studio_photos:
         with Image.open(photo) as image:
             assert image.format == "WEBP" and image.width >= 500 and image.height >= 300

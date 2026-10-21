@@ -12,7 +12,7 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 - `styles.css`, `advanced.css`, `reference.css`, `compare.css`, `portfolio-projetos.css`, `finish.css`, `lab.css`, `studio.css`: identidade neon, experiências interativas e composição responsiva.
 - `script.js`, `advanced.js`, `lab.js`: navegação, showroom, WhatsApp e instalação.
 - `lab-experience.html`, `lab-experience.css`, `lab-experience.js`, `lab-data.js`, `lab-fixtures.js`: demonstrações conceituais isoladas, com dados fictícios e carregamento sob demanda na prévia.
-- `studio.js`, `studio-data.js`, `studio-colors.js`, `studio-preview.html`, `studio-preview.js`, `studio-preview.css`: simulador local com dez segmentos, quatro estilos e prévia isolada em iframe.
+- `studio.js`, `studio-data.js`, `studio-colors.js`, `studio-preview.html`, `studio-preview.js`, `studio-preview.css`: simulador local com 32 segmentos ativos, incluindo as 20 categorias de música prioritárias, quatro modelos por segmento, quatro estilos e prévia isolada em iframe.
 - `manifest.webmanifest`, `sw.js`, `offline.html`: recursos PWA.
 - `privacidade.html`: política de privacidade.
 - `assets/`: identidade original fornecida e derivação transparente do monograma para o hero e ícone maskable do PWA.
@@ -24,11 +24,11 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 
 ## Experiências implementadas
 
-- TidiReis Studio: upload local de logo PNG/JPG/WebP (até 5 MB), extração de cores no navegador, nome e paleta editáveis, dez segmentos e quatro composições visuais. A prévia permite navegar, trocar dispositivo/estilo, ampliar e testar ações ilustrativas. A mensagem comercial usa o WhatsApp já configurado no site. Nenhuma imagem do visitante é enviada ou salva em servidor.
+- TidiReis Studio: upload local de logo PNG/JPG/WebP (até 5 MB), extração de cores no navegador com suporte a transparência, branco, preto e logos monocromáticas, nome e paleta editáveis, 32 segmentos ativos e quatro modelos por segmento. O catálogo separa segmento, template, estilo e paleta. A prévia aparece após a escolha do negócio, permite navegar, trocar dispositivo/modelo/estilo, ampliar e testar ações ilustrativas. A mensagem comercial usa o WhatsApp já configurado no site. Nenhuma imagem do visitante é enviada ou salva em servidor.
 - TidiReis Experience Lab com 13 demonstrações: seis websites de identidades distintas, três painéis administrativos, Design Studio, delivery, transporte e apresentação interativa da marca oficial. Há prévia em larguras reais de desktop, tablet e celular, rolagem interna, reinício e tela cheia. Cada exemplo usa dados fictícios e interações locais; nenhum pedido, pagamento, atendimento, corrida ou agendamento é real. A instalação do próprio site fica no rodapé quando o navegador oferece essa opção.
 - `assets/lab-architecture.webp`, `assets/lab-chair.webp` e `assets/lab-repair.webp`: imagens geradas para os exemplos conceituais do TR Lab. As demonstrações são carregadas sob demanda na página, e seus arquivos essenciais ficam disponíveis no cache do PWA após a instalação do service worker.
 - Portfólio de 12 projetos publicados, com capturas reais em desktop e celular, filtros por categoria e detalhes na própria página. O TR Lab permanece identificado como demonstração conceitual.
-- As 20 fotos demonstrativas do Studio ficam em `assets/studio/` como WebP locais. São fotos do Unsplash, com uso comercial permitido pela [licença Unsplash](https://unsplash.com/license); os IDs de origem estão em `scripts/fetch_studio_images.py`. O simulador não depende do Unsplash em tempo de execução.
+- As 42 fotos demonstrativas do Studio ficam em `assets/studio/` como WebP locais. As 20 imagens originais são do Unsplash, com uso comercial permitido pela [licença Unsplash](https://unsplash.com/license); os IDs de origem estão em `scripts/fetch_studio_images.py`. As 22 imagens de música e pets adicionadas ao Studio foram geradas para estas demonstrações e otimizadas localmente. O simulador não depende de serviços de imagem em tempo de execução.
 - Seis cards de serviço com painel de detalhes e atalho de orçamento específico.
 - Comparador antes/depois com arraste, toque e teclado; navegação rápida com Ctrl/Cmd+K; TR System com seis comandos predefinidos.
 - Orçamento em quatro etapas, com serviço, recursos, descrição e revisão antes de abrir o WhatsApp. O formulário não envia dados a um servidor.
@@ -47,9 +47,9 @@ O CNPJ passou na verificação matemática dos dígitos verificadores. Isso não
 
 ## Manutenção do TidiReis Studio
 
-- Adicione ou altere segmentos, títulos, textos e opções em `studio-data.js`, e crie a composição correspondente no registro `renderers` em `studio-preview.js`.
-- Ajuste os quatro estilos em `studio-preview.css`. A prévia usa iframe para impedir que o CSS dos modelos altere o site institucional.
-- Troque fotos em `assets/studio/`, mantendo os nomes `{segmento}-1.webp` e `{segmento}-2.webp`, ou atualize a função `photo` em `studio-preview.js`. Use apenas imagens com licença adequada.
+- Adicione ou altere segmentos e os nomes dos quatro modelos em `studio-data.js`. Cada segmento ativo exige uma imagem local e uma composição de conteúdo no registro `renderers` em `studio-preview.js`. Mantenha `active: false` enquanto o conteúdo não estiver pronto.
+- Ajuste os quatro layouts de template e os quatro estilos em `studio-preview.css`. A prévia usa iframe para impedir que o CSS dos modelos altere o site institucional.
+- Troque fotos em `assets/studio/`, mantendo o nome `{segmento}-1.webp`, ou atualize `image` em `studio-data.js`. Use apenas imagens com licença adequada.
 - As cores automáticas e as regras de contraste ficam em `studio-colors.js`; os seletores manuais estão em `studio.js`.
 - O botão comercial lê o número do link `data-wa="proposta"` já configurado no site. Ao atualizar o contato oficial, atualize esse link. As ações dentro dos modelos são ilustrativas e não fazem pedidos reais.
 
@@ -59,7 +59,7 @@ Na Vercel, selecione **Other**, use esta pasta como raiz, deixe o comando de bui
 
 Para atualizar as capturas, instale as dependências de desenvolvimento com `npm install` e execute `npm run capturar-portfolio`. O script usa Chrome por meio do Playwright e Sharp, e grava os resultados em `public/portfolio/relatorio.json`. Revise visualmente cada nova captura antes de publicar.
 
-Execute `python verify_site.py` (requer Pillow no ambiente de teste), `node verify_sw.js`, `node verify_terminal.js`, `node scripts/verify_lab.mjs`, `node scripts/verify_studio.mjs` e `node scripts/verify_portfolio.mjs` (os três últimos requerem Chrome local), além de `node --check` nos arquivos JavaScript ativos antes de publicar.
+Execute `python verify_site.py` (requer Pillow no ambiente de teste), `node verify_sw.js`, `node verify_terminal.js`, `node scripts/verify_studio.mjs` e `node --check` nos arquivos JavaScript ativos. Para testar interações e larguras em um Chrome local que aceite depuração remota, use `node scripts/verify_studio.mjs --browser`. `node scripts/verify_lab.mjs` e `node scripts/verify_portfolio.mjs` também usam Chrome local.
 
 O domínio publicado é `https://trdigital.vercel.app/`. Canonical, Open Graph, robots e sitemap apontam para esse endereço. O service worker mantém apenas recursos estáticos públicos e as páginas conhecidas no cache. A instalação continua dependente do suporte do navegador; no iOS, o site mostra instruções de Adicionar à Tela de Início.
 
