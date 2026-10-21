@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://trdigital.vercel.app/sitemap.xml

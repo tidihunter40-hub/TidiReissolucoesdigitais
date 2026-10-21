@@ -54,14 +54,33 @@
 
   const toggle = document.getElementById('menuToggle');
   const mobile = document.getElementById('mobileNav');
+  let menuReturnFocus = null;
   const setOpen = open => {
+    if (open) menuReturnFocus = document.activeElement;
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
     mobile.hidden = !open;
+    document.body.classList.toggle('menu-open', open);
+    if (open) mobile.querySelector('a').focus();
+    else if (mobile.contains(document.activeElement)) (menuReturnFocus || toggle).focus();
   };
   toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-  mobile.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setOpen(false)));
+  mobile.querySelectorAll('a,button').forEach(link => link.addEventListener('click', () => setOpen(false)));
   document.addEventListener('keydown', event => { if (event.key === 'Escape') setOpen(false); });
+  mobile.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const items = [...mobile.querySelectorAll('a,button')].filter(item => !item.hidden);
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); toggle.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); toggle.focus(); }
+  });
+  toggle.addEventListener('keydown', event => {
+    if (event.key === 'Tab' && toggle.getAttribute('aria-expanded') === 'true') {
+      event.preventDefault();
+      (event.shiftKey ? [...mobile.querySelectorAll('a,button')].at(-1) : mobile.querySelector('a')).focus();
+    }
+  });
   document.addEventListener('click', event => { if (!header.contains(event.target)) setOpen(false); });
   window.addEventListener('resize', () => { if (window.innerWidth > 920) setOpen(false); }, { passive: true });
 
@@ -88,16 +107,18 @@
   window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault();
     deferredInstall = event;
-    if (!isStandalone) installButton.hidden = false;
+    if (!isStandalone && !sessionStorage.getItem('tidireis-install-dismissed')) installButton.hidden = false;
   });
   installButton.addEventListener('click', async () => {
     if (deferredInstall) {
       deferredInstall.prompt();
-      await deferredInstall.userChoice;
+      const result = await deferredInstall.userChoice;
       deferredInstall = null;
       installButton.hidden = true;
+      if (result.outcome !== 'accepted') sessionStorage.setItem('tidireis-install-dismissed', '1');
     } else if (isIOS) installDialog.showModal();
   });
+  installDialog.addEventListener('click', event => { if (event.target === installDialog) installDialog.close(); });
   document.getElementById('closeInstall').addEventListener('click', () => installDialog.close());
   window.addEventListener('appinstalled', () => { installButton.hidden = true; });
   const updateToast = document.getElementById('updateToast');
@@ -110,6 +131,9 @@
     window.addEventListener('load', async () => {
       try {
         const registration = await navigator.serviceWorker.register('./sw.js');
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') registration.update().catch(() => {});
+        });
         const showUpdate = () => {
           if (registration.waiting && navigator.serviceWorker.controller) {
             waitingWorker = registration.waiting;

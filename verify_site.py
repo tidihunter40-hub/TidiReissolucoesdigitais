@@ -82,16 +82,20 @@ def main():
     maskable = [icon for icon in manifest["icons"] if icon.get("purpose") == "maskable"]
     assert maskable, "Missing maskable icon"
     with Image.open(ROOT / maskable[0]["src"]) as image:
-        alpha = image.getchannel("A")
-        visible = alpha.point(lambda value: 255 if value > 32 else 0).getbbox()
-        assert visible and visible[0] > image.width * .15 and visible[2] < image.width * .85
-        assert visible[1] > image.height * .15 and visible[3] < image.height * .85
+        assert image.size == (512, 512)
+        assert image.convert("RGB").getpixel((0, 0)) == (2, 8, 23)
+        assert image.convert("RGB").getpixel((256, 256)) != (2, 8, 23)
     assert Image.open(ROOT / "assets/og-image.jpg").size == (1200, 630)
     assert (ROOT / "offline.html").exists()
-    assert "Conexão interrompida." in (ROOT / "offline.html").read_text(encoding="utf-8")
+    assert "Você está offline." in (ROOT / "offline.html").read_text(encoding="utf-8")
     assert "Página não encontrada." in (ROOT / "404.html").read_text(encoding="utf-8")
     assert (ROOT / "privacidade.html").exists()
     assert (ROOT / "robots.txt").exists()
+    assert (ROOT / "sitemap.xml").exists()
+    assert 'https://trdigital.vercel.app/' in html
+    assert 'href="finish.css"' in html
+    assert 'id="quoteStatus"' in html
+    assert 'href="#orcamento">Iniciar meu projeto' in html
     assert "SKIP_WAITING" in (ROOT / "sw.js").read_text(encoding="utf-8")
     assert "Serviço: " in (ROOT / "advanced.js").read_text(encoding="utf-8")
     ignored = set((ROOT / ".vercelignore").read_text(encoding="utf-8").splitlines())

@@ -51,7 +51,7 @@
   };
   const studioHTML = () => '<div class="lab-studio ' + (labState.theme === 'light' ? 'studio-light' : '') + ' studio-button-' + labState.buttonStyle + ' studio-cards-' + labState.cardStyle + ' studio-font-' + labState.font + ' studio-layout-' + labState.layout + '" style="--studio-accent:' + labState.color + ';--studio-glow:' + (labState.glow / 28) + 'rem"><div class="studio-nav"><b>FORMA / STUDIO</b><span>MENU ☰</span></div><div class="studio-hero"><small>DESIGN QUE COMUNICA</small><strong>Uma ideia.<br>Infinitas possibilidades.</strong><p>Identidade, interface e experiência em uma só direção.</p><button type="button" data-lab-action="studio-cta">Explorar conceito →</button><em id="studioFeedback" aria-live="polite"></em></div><div class="studio-cards"><span>01 / Estratégia</span><span>02 / Identidade</span><span>03 / Digital</span></div></div>';
   const pwaHTML = () => '<div class="lab-phone"><div class="phone-top"><span>9:41</span><span>' + (labState.pwaOffline ? 'OFFLINE' : '●●● ▰') + '</span></div><div class="phone-app"><div class="phone-app-head"><b>TR / POCKET</b><span>◉</span></div><div class="phone-status">' + (labState.pwaInstalled ? 'Atalho simulado na tela inicial' : 'Prévia no navegador') + (labState.pwaOffline ? ' · Conteúdo local disponível' : '') + '</div>' + (labState.pwaNotice ? '<div class="phone-notice" role="status">Prévia local: nova ideia em destaque. Nenhuma notificação foi enviada.</div>' : '') + (labState.pwaPage === 'home' ? '<small>OLÁ, VISITANTE</small><h4>Descubra novas ideias.</h4><div class="phone-feature"><span>DESTAQUE</span><strong>Design que transforma negócios.</strong><button type="button" data-lab-action="save">' + (labState.pwaSaved ? '✓ Salvo' : '☆ Salvar') + '</button></div><p>Explore soluções digitais em qualquer tela.</p>' : labState.pwaPage === 'saved' ? '<small>SUA COLEÇÃO</small><h4>Itens salvos</h4><div class="phone-feature"><strong>' + (labState.pwaSaved ? 'Design que transforma negócios.' : 'Nada salvo por enquanto.') + '</strong></div>' : '<small>SEU ESPAÇO</small><h4>Perfil demonstrativo</h4><div class="phone-profile">TR</div><p>Esta é uma simulação local. Nenhuma conta foi criada.</p>') + '<div class="phone-nav"><button type="button" data-pwa-page="home">⌂</button><button type="button" data-pwa-page="saved">☆</button><button type="button" data-pwa-page="profile">◉</button></div></div></div>';
-  const cubeHTML = () => '<div class="lab-3d finish-' + labState.finish + ' light-' + labState.light + '" id="lab3d"><div class="cube-scene"><div class="tr-object" id="trObject" style="transform:rotateX(' + labState.rx + 'deg) rotateY(' + labState.ry + 'deg) scale(' + labState.zoom + ')"><div class="tr-face front"><img src="assets/logo-symbol-transparent.png" alt="Monograma TR em 3D" draggable="false" /></div><div class="tr-face back"><img src="assets/logo-symbol-transparent.png" alt="" draggable="false" /></div><div class="tr-face edge edge-one"></div><div class="tr-face edge edge-two"></div></div></div><span>ARRASTE PARA GIRAR · USE OS CONTROLES PARA ZOOM</span></div>';
+  const cubeHTML = () => '<div class="lab-3d finish-' + labState.finish + ' light-' + labState.light + '" id="lab3d"><div class="cube-scene"><div class="tr-object" id="trObject" style="transform:rotateX(' + labState.rx + 'deg) rotateY(' + labState.ry + 'deg) scale(' + labState.zoom + ')"><div class="tr-face front"><img src="assets/logo-symbol-transparent.webp" alt="Monograma TR em 3D" draggable="false" /></div><div class="tr-face back"><img src="assets/logo-symbol-transparent.webp" alt="" draggable="false" /></div><div class="tr-face edge edge-one"></div><div class="tr-face edge edge-two"></div></div></div><span>ARRASTE PARA GIRAR · USE OS CONTROLES PARA ZOOM</span></div>';
   const labViews = { site: siteHTML, dashboard: dashboardHTML, studio: studioHTML, pwa: pwaHTML, '3d': cubeHTML };
   function syncLabControls() {
     $$('.lab-control', labControls).forEach(button => {
@@ -194,7 +194,7 @@
   document.addEventListener('keydown', event => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); commandDialog.open ? commandDialog.close() : openCommands(); } });
 
   // Budget: choices stay in this browser; only a user click opens the final WhatsApp URL.
-  const quoteForm = $('#quoteForm'); const quoteSteps = $$('.quote-step'); const quoteIdea = $('#projectIdea'); const quoteError = $('#quoteError'); let quoteStep = 0;
+  const quoteForm = $('#quoteForm'); const quoteSteps = $$('.quote-step'); const quoteIdea = $('#projectIdea'); const quoteError = $('#quoteError'); const quoteStatus = $('#quoteStatus'); let quoteStep = 0;
   const features = {
     Site: ['Formulário de contato', 'WhatsApp', 'Blog', 'Agendamento', 'Animações'],
     'Loja virtual': ['Catálogo', 'Carrinho', 'Pagamento', 'Gestão de pedidos', 'Cupons'],
@@ -209,25 +209,104 @@
   function renderFeatures() { const box = $('#featureOptions'); box.replaceChildren(); (features[selectedService()] || []).forEach(name => { const label = document.createElement('label'); const input = document.createElement('input'); input.type = 'checkbox'; input.name = 'feature'; input.value = name; const span = document.createElement('span'); span.textContent = name; label.append(input, span); box.append(label); }); }
   function selectedFeatures() { return $$('input[name="feature"]:checked', quoteForm).map(input => input.value); }
   function renderSummary() { const box = $('#quoteSummary'); box.replaceChildren(); [['Serviço', selectedService()], ['Recursos', selectedFeatures().join(', ') || 'A definir'], ['Ideia', quoteIdea.value.trim()]].forEach(([title, value]) => { const row = document.createElement('div'); const name = document.createElement('strong'); const text = document.createElement('span'); name.textContent = title; text.textContent = value; row.append(name, text); box.append(row); }); }
-  function showQuoteStep(step) { quoteStep = step; quoteSteps.forEach((element, index) => { element.hidden = index !== step; }); $('#quoteBack').hidden = step === 0; $('#quoteNext').hidden = step === 3; $('#quoteSubmit').hidden = step !== 3; $('#quoteProgressLabel').textContent = 'ETAPA ' + (step + 1) + ' DE 4 · ' + ['SERVIÇO', 'RECURSOS', 'SUA IDEIA', 'REVISÃO'][step]; $('#quoteProgressBar').style.width = ((step + 1) * 25) + '%'; quoteError.hidden = true; if (step === 3) renderSummary(); }
+  function showQuoteStep(step) { quoteStep = step; quoteSteps.forEach((element, index) => { element.hidden = index !== step; }); $('#quoteBack').hidden = step === 0; $('#quoteNext').hidden = step === 3; $('#quoteSubmit').hidden = step !== 3; $('#quoteProgressLabel').textContent = 'ETAPA ' + (step + 1) + ' DE 4 · ' + ['SERVIÇO', 'RECURSOS', 'SUA IDEIA', 'REVISÃO'][step]; $('#quoteProgressBar').style.width = ((step + 1) * 25) + '%'; $('.quote-progress', quoteForm).setAttribute('aria-valuenow', String(step + 1)); quoteError.hidden = true; quoteStatus.hidden = true; if (step === 3) renderSummary(); }
   $('#quoteNext').addEventListener('click', () => { if (quoteStep === 0 && !selectedService()) { quoteError.textContent = 'Escolha um serviço para continuar.'; quoteError.hidden = false; quoteForm.querySelector('input[name="service"]').focus(); return; } if (quoteStep === 2 && !quoteIdea.value.trim()) { quoteError.textContent = 'Descreva sua ideia para continuar.'; quoteError.hidden = false; quoteIdea.focus(); return; } if (quoteStep === 0) renderFeatures(); showQuoteStep(quoteStep + 1); });
   $('#quoteBack').addEventListener('click', () => showQuoteStep(quoteStep - 1));
   quoteIdea.addEventListener('input', () => { $('#ideaCount').textContent = quoteIdea.value.length + ' / 1200 caracteres'; });
-  quoteForm.addEventListener('submit', event => { event.preventDefault(); if (quoteStep !== 3) return; const service = selectedService(); const description = quoteIdea.value.trim(); if (!service || !description) { showQuoteStep(!service ? 0 : 2); return; } const message = 'Olá! Conheci a TidiReis pelo site e gostaria de solicitar um orçamento.\n\nServiço: ' + service + '\nRecursos: ' + (selectedFeatures().join(', ') || 'A definir') + '\nMinha ideia: ' + description; window.open('https://wa.me/5571992417737?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer'); });
+  quoteForm.addEventListener('submit', event => {
+    event.preventDefault();
+    if (quoteStep !== 3) return;
+    const service = selectedService();
+    const description = quoteIdea.value.trim();
+    if (!service || !description) { showQuoteStep(!service ? 0 : 2); return; }
+    const submit = $('#quoteSubmit');
+    if (submit.disabled) return;
+    const message = 'Olá! Conheci a TidiReis pelo site e gostaria de solicitar um orçamento.\n\nServiço: ' + service + '\nRecursos: ' + (selectedFeatures().join(', ') || 'A definir') + '\nMinha ideia: ' + description;
+    const url = 'https://wa.me/5571992417737?text=' + encodeURIComponent(message);
+    submit.disabled = true;
+    submit.textContent = 'Abrindo WhatsApp…';
+    quoteStatus.hidden = false;
+    quoteStatus.replaceChildren();
+    try {
+      window.open(url, '_blank', 'noopener,noreferrer');
+      quoteStatus.append('Confira a nova aba do WhatsApp e toque em enviar. Se ela não abriu, ');
+      const fallback = document.createElement('a');
+      fallback.href = url;
+      fallback.target = '_blank';
+      fallback.rel = 'noopener noreferrer';
+      fallback.textContent = 'abra o WhatsApp por este link';
+      quoteStatus.append(fallback, '.');
+    } catch (_) {
+      quoteStatus.append('Seu navegador bloqueou a nova aba. ');
+      const fallback = document.createElement('a');
+      fallback.href = url;
+      fallback.target = '_blank';
+      fallback.rel = 'noopener noreferrer';
+      fallback.textContent = 'Abrir WhatsApp manualmente';
+      quoteStatus.append(fallback);
+    } finally {
+      setTimeout(() => { submit.disabled = false; submit.innerHTML = 'Enviar solicitação <span aria-hidden="true">↗</span>'; }, 2500);
+    }
+  });
   showQuoteStep(0);
 
   const terminalOutput = $('#terminalOutput'); const terminalInput = $('#terminalInput');
-  const terminalResponses = {
-    help: 'Comandos: help, services, projects, contact, about, clear.',
-    services: 'Sites, lojas virtuais, sistemas, aplicativos, identidade visual, propagandas e informática. Veja a seção Serviços.',
-    projects: 'Os projetos apresentados são conceitos demonstrativos. Veja a seção Projetos.',
-    contact: 'Fale com a TidiReis pelo WhatsApp: (71) 99241-7737. Veja a seção Contato.',
-    about: 'TidiReis Soluções Digitais · Tiago Silva dos Reis LTDA · CNPJ 69.340.664/0001-04.'
-  };
+  const terminalHistory = [];
+  let terminalHistoryIndex = 0;
+  let terminalDraft = '';
+  const terminalCommands = new Map([
+    ['help', ['Comandos disponíveis:\nhelp · sobre · servicos · sites · sistemas · apps · design · manutencao · contato · clear · home\nUse ↑ e ↓ para recuperar comandos anteriores.']],
+    ['sobre', ['A TidiReis Soluções Digitais cria experiências digitais, identidade visual e soluções de informática para negócios que querem evoluir.']],
+    ['servicos', ['Nossos serviços:\n• Desenvolvimento de sites\n• Desenvolvimento de sistemas\n• Desenvolvimento de aplicativos\n• Criação de logomarcas\n• Identidade visual\n• Publicidade digital\n• Manutenção de computadores\n• Venda de peças e periféricos', '#servicos', 'Explorar serviços →']],
+    ['sites', ['Desenvolvemos sites profissionais, responsivos e modernos para apresentar sua marca e facilitar o contato com clientes.', '#projetos', 'Conhecer projetos →']],
+    ['sistemas', ['Criamos sistemas personalizados para organizar processos, apresentar dados e apoiar a rotina do seu negócio.', '#servicos', 'Conhecer soluções →']],
+    ['apps', ['Desenvolvemos aplicativos e soluções digitais pensados para diferentes dispositivos e necessidades.', '#servicos', 'Conhecer soluções →']],
+    ['design', ['Criamos logomarcas e identidades visuais para dar consistência e personalidade à sua marca.', '#servicos', 'Explorar design →']],
+    ['manutencao', ['Oferecemos manutenção de computadores, diagnóstico e orientação sobre peças e periféricos.', '#servicos', 'Ver serviços →']],
+    ['contato', ['Fale com a TidiReis pelo WhatsApp: (71) 99241-7737. Os canais de contato estão na seção Contato.', '#contato', 'Ir para contato →']],
+    ['projetos', ['Os projetos mostrados no site são conceitos demonstrativos. Explore a vitrine para conhecer as ideias.', '#projetos', 'Ver projetos →']]
+  ]);
+  const terminalAliases = new Map([['services', 'servicos'], ['projects', 'projetos'], ['contact', 'contato'], ['about', 'sobre']]);
+  function addTerminalEntry(command, message, link, linkText) {
+    const entry = document.createElement('div'); entry.className = 'terminal-entry';
+    const prompt = document.createElement('span'); prompt.className = 'terminal-entry-command'; prompt.textContent = 'tidireis@site:~$ ' + command;
+    const response = document.createElement('div'); response.className = 'terminal-entry-response';
+    const messageText = document.createElement('span'); messageText.textContent = message; response.append(messageText);
+    if (link) { const action = document.createElement('a'); action.href = link; action.textContent = linkText; response.append(action); }
+    entry.append(prompt, response); terminalOutput.append(entry);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+  }
   $('#terminalForm').addEventListener('submit', event => {
-    event.preventDefault(); const command = terminalInput.value.trim().toLowerCase(); if (!command) return;
-    if (command === 'clear') { terminalOutput.replaceChildren(); terminalInput.value = ''; return; }
-    const entry = document.createElement('p'); const prompt = document.createElement('strong'); prompt.textContent = 'tidireis@site:~$ ' + command; const response = document.createElement('span'); response.textContent = terminalResponses[command] || 'Comando não reconhecido. Digite help.'; entry.append(prompt, response); terminalOutput.append(entry); terminalOutput.scrollTop = terminalOutput.scrollHeight; terminalInput.value = '';
+    event.preventDefault();
+    const typed = terminalInput.value.trim();
+    if (!typed) return;
+    terminalHistory.push(typed);
+    terminalHistoryIndex = terminalHistory.length;
+    terminalDraft = '';
+    terminalInput.value = '';
+    const normalized = typed.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const command = terminalAliases.get(normalized) || normalized;
+    if (command === 'clear') terminalOutput.replaceChildren();
+    else if (command === 'home') {
+      addTerminalEntry(typed, 'Voltando ao início do site...');
+      window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    } else {
+      const result = terminalCommands.get(command);
+      if (result) addTerminalEntry(typed, ...result);
+      else addTerminalEntry(typed, 'Comando não reconhecido: ' + typed + '\nDigite help para visualizar os comandos disponíveis.');
+    }
+    terminalInput.focus({ preventScroll: true });
+  });
+  terminalInput.addEventListener('keydown', event => {
+    if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+    if (!terminalHistory.length) return;
+    event.preventDefault();
+    if (event.key === 'ArrowUp') {
+      if (terminalHistoryIndex === terminalHistory.length) terminalDraft = terminalInput.value;
+      terminalHistoryIndex = Math.max(0, terminalHistoryIndex - 1);
+    } else terminalHistoryIndex = Math.min(terminalHistory.length, terminalHistoryIndex + 1);
+    terminalInput.value = terminalHistoryIndex === terminalHistory.length ? terminalDraft : terminalHistory[terminalHistoryIndex];
+    terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
   });
 
   if (location.protocol === 'https:' || location.hostname === 'localhost') {

@@ -9,7 +9,7 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 ## Estrutura
 
 - `index.html`: conteúdo, serviços, TR Lab, projetos conceituais, comparador, terminal e orçamento em etapas.
-- `styles.css`, `advanced.css`, `reference.css`: identidade neon, experiências interativas e composição alinhada à referência visual.
+- `styles.css`, `advanced.css`, `reference.css`, `compare.css`, `showcase.css`, `finish.css`: identidade neon, experiências interativas e composição responsiva.
 - `script.js`, `advanced.js`: navegação, experiências interativas, WhatsApp e instalação.
 - `manifest.webmanifest`, `sw.js`, `offline.html`: recursos PWA.
 - `privacidade.html`: política de privacidade.
@@ -31,6 +31,7 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 - Modos Cinematic e Performance. A preferência por movimento reduzido ou economia de dados seleciona inicialmente o modo Performance. A opção pode ser alterada pelo visitante.
 - A segunda direção visual aproxima o hero da referência fornecida: cenário tecnológico dedicado, TR original em destaque, serviços compactos e TR Lab na primeira sequência de rolagem. Veja `AUDITORIA.md` para resultados reais e pendências de publicação.
 - A seção Sobre apresenta o TR original em um showroom azul, quatro áreas de atuação flutuantes, card de empresa e compromisso, CTA de WhatsApp e faixa de diferenciais sem métricas inventadas.
+- As seções finais usam três etapas de projeto, orçamento guiado com destino real no WhatsApp, FAQ nativo, CTA com acesso ao orçamento e rodapé com contatos verificados no projeto.
 
 ## Dados comerciais do ZIP fornecido
 
@@ -40,16 +41,14 @@ Abra `index.html` para inspecionar o conteúdo. Para testar o PWA, sirva esta pa
 
 O CNPJ passou na verificação matemática dos dígitos verificadores. Isso não equivale a consultar o cadastro oficial. Confirme esses dados com o titular antes de publicar.
 
-## Preparação para publicação
+## Publicação
 
 Na Vercel, selecione **Other**, use esta pasta como raiz, deixe o comando de build vazio e sirva a pasta raiz (`.`). Não há instalação de pacotes, arquivo de lock ou variáveis de ambiente necessárias. O Node.js é usado apenas para as verificações locais. A configuração está em `vercel.json`; não há reescrita genérica de rotas.
 
-Execute `python verify_site.py` (requer Pillow no ambiente de teste), `node verify_showcase.js`, `node verify_sw.js` e `node --check` nos quatro arquivos JavaScript antes de publicar. Consulte `AUDITORIA.md` para o resultado desta preparação.
+Execute `python verify_site.py` (requer Pillow no ambiente de teste), `node verify_showcase.js`, `node verify_sw.js`, `node verify_terminal.js` e `node --check` nos quatro arquivos JavaScript antes de publicar.
 
-1. Confirme os dados comerciais e informe o domínio definitivo.
-2. Com o domínio real, configure URL canônica, `og:url`, URL absoluta de `og:image` e `sitemap.xml`. Esses endereços não foram inventados.
-3. Teste em navegador real nas larguras de 1920, 1440, 768, 390 e 360 px, inclusive TR Lab, vitrine, instalação, atualização e modo offline.
-4. Meça Lighthouse e Core Web Vitals em uma prévia HTTPS.
-5. Revise a política de privacidade após configurar a hospedagem e qualquer ferramenta de analytics.
+O domínio publicado é `https://trdigital.vercel.app/`. Canonical, Open Graph, robots e sitemap apontam para esse endereço. O service worker mantém apenas recursos estáticos públicos e as páginas conhecidas no cache. A instalação continua dependente do suporte do navegador; no iOS, o site mostra instruções de Adicionar à Tela de Início.
 
-A Vercel pode servir esta pasta como projeto estático. Nenhuma publicação foi feita.
+Lighthouse e Core Web Vitals exigem medição em navegador e rede reais; não devem ser presumidos a partir dos testes estáticos.
+
+A Vercel serve esta pasta como projeto estático, sem build ou dependências de produção.

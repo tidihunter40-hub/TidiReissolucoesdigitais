@@ -1,8 +1,8 @@
-const CACHE = 'tidireis-static-v10';
+const CACHE = 'tidireis-static-v11';
 const CORE = [
   './', './index.html', './offline.html', './privacidade.html',
-  './styles.css', './advanced.css', './reference.css', './compare.css', './showcase.css', './script.js', './advanced.js', './showcase.js', './manifest.webmanifest',
-  './assets/logo-tr.webp', './assets/logo-symbol-transparent.png', './assets/hero-scene-v2.webp', './assets/compare-building.webp',
+  './styles.css', './advanced.css', './reference.css', './compare.css', './showcase.css', './finish.css', './script.js', './advanced.js', './showcase.js', './manifest.webmanifest',
+  './assets/logo-tr.webp', './assets/logo-symbol-transparent.webp', './assets/hero-scene-v2.webp', './assets/compare-building.webp',
   './assets/icon-192.png', './assets/favicon.png',
   './assets/apple-touch-icon.png', './assets/icon-maskable.png', './assets/og-image.jpg'
 ];
@@ -21,8 +21,10 @@ self.addEventListener('message', event => {
 self.addEventListener('fetch', event => {
   const request = event.request;
   const url = new URL(request.url);
-  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+  if (request.method !== 'GET' || url.origin !== self.location.origin || url.search) return;
   if (request.mode === 'navigate') {
+    const allowedPages = new Set(['/', '/index.html', '/privacidade.html', '/offline.html']);
+    if (!allowedPages.has(url.pathname)) return;
     event.respondWith(
       fetch(request).then(response => {
         if (response.ok && response.type === 'basic') {

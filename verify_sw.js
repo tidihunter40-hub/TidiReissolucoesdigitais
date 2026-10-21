@@ -47,14 +47,28 @@ async function main() {
   await pending;
   assert.equal(stores.has('tidireis-static-old'), false);
 
-  const request = { url: 'https://example.test/unknown-page', method: 'GET', mode: 'navigate' };
+  const request = { url: 'https://example.test/privacidade.html', method: 'GET', mode: 'navigate' };
   let response;
   listeners.fetch({
     request,
     respondWith(value) { response = value; },
     waitUntil() {},
   });
-  assert.deepEqual(await response, { asset: './offline.html' });
+  assert.deepEqual(await response, { asset: './privacidade.html' });
+  response = null;
+  listeners.fetch({
+    request: { url: 'https://example.test/index.html?private=1', method: 'GET', mode: 'navigate' },
+    respondWith(value) { response = value; },
+    waitUntil() {},
+  });
+  assert.equal(response, null);
+  response = null;
+  listeners.fetch({
+    request: { url: 'https://example.test/unknown-page', method: 'GET', mode: 'navigate' },
+    respondWith(value) { response = value; },
+    waitUntil() {},
+  });
+  assert.equal(response, null);
   listeners.message({ data: { type: 'SKIP_WAITING' } });
   assert.equal(skipWaiting, true);
   console.log('OK: pré-cache, limpeza de versões, fallback offline e atualização.');
