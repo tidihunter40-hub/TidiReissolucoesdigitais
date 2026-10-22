@@ -320,3 +320,55 @@ body{background:#030711}
 @media(max-width:960px){.advantage .advantage-layout{grid-template-columns:1fr;gap:39px}.advantage .advantage-left{max-width:710px}.advantage .advantage-left h2{font-size:clamp(48px,7vw,70px)}.advantage .advantage-right{margin:0}.advantage .advantage-item{min-height:200px}.advantage::before{background-position:70% 25%;background-size:min(70vw,570px);opacity:.08}}
 @media(max-width:650px){.advantage{padding:74px 0}.advantage .advantage-layout{gap:32px}.advantage .section-kicker{margin-bottom:18px}.advantage .advantage-left h2{font-size:clamp(38px,9vw,56px);margin-bottom:22px}.advantage .advantage-left>p{font-size:15px;line-height:1.65}.advantage .advantage-left>p br{display:none}.advantage-cta{width:100%;margin-top:24px;font-size:13px}.advantage-cta>span:first-child{padding:12px 15px}.advantage-cta-arrow{width:49px}.advantage .advantage-right{grid-template-columns:1fr;gap:13px}.advantage .advantage-item{min-height:0;padding:22px}.advantage-card-copy{margin-top:15px}.advantage-card-copy strong{font-size:18px}.advantage-card-copy>span{font-size:14px}.advantage::before{background-size:95vw;opacity:.06}}
 @media(prefers-reduced-motion:reduce){.advantage-cta,.advantage-cta-arrow,.advantage .advantage-item,.advantage-card-icon,.advantage .adv-arrow{transition:none}.advantage .advantage-item:hover,.advantage-cta:hover{transform:none}}
+
+/* HERO: the original TR artwork sits on the platform painted in hero-scene-v2.webp. */
+.hero-logo-frame{
+  --hero-logo-size:clamp(220px,17vw,320px);
+  left:50%;
+  top:calc(135px - 9vw);
+  width:var(--hero-logo-size);
+  height:var(--hero-logo-size);
+  transform:translateX(-50%);
+  filter:drop-shadow(0 11px 8px #000c) drop-shadow(0 0 12px #63cfff55);
+}
+.hero-logo-image{top:0;z-index:1}
+.hero-logo-frame::before,
+.hero-logo-frame::after{
+  content:"";
+  display:block;
+  position:absolute;
+  pointer-events:none;
+  border-radius:50%;
+}
+.hero-logo-frame::before{
+  z-index:0;
+  left:12%;
+  top:76%;
+  width:76%;
+  height:13%;
+  background:radial-gradient(ellipse,#010713e8 12%,#052d5b9c 52%,#098cff00 78%);
+  filter:blur(8px);
+  transform:scaleY(.42);
+}
+.hero-logo-frame::after{
+  z-index:0;
+  left:7%;
+  top:75%;
+  width:86%;
+  height:22%;
+  background:radial-gradient(ellipse,#65dfff55 0%,#117bff2b 42%,transparent 75%);
+  filter:blur(13px);
+  transform:scaleY(.48);
+}
+.hero-logo-caption{top:86%;bottom:auto;z-index:2}
+@media(min-width:921px) and (max-width:1150px){
+  .hero-logo-frame{left:calc(50% + 55px)}
+}
+@media(max-width:920px){
+  .hero{background-position:50% calc(50% + 240px)}
+  .hero-logo-frame{--hero-logo-size:min(56vw,380px);left:50%;top:0}
+}
+@media(max-width:620px){
+  .hero{min-height:830px;background-position:50% calc(50% + 225px)}
+  .hero-logo-frame{--hero-logo-size:min(88vw,350px);top:clamp(10px,calc(205px - 50vw),25px)}
+}
