@@ -21,7 +21,7 @@ body{background:#030711}
 .brand-text strong span{color:#cfdff7}
 .brand-text small{font-size:8px;letter-spacing:3.1px;color:#cddfff;margin-top:8px}
 .site-header .brand-text strong{position:relative;isolation:isolate;display:inline-block;color:#dfe6ee;background:linear-gradient(180deg,#fff 0%,#e9eef4 27%,#abb9c8 51%,#f5f8fc 66%,#8494a6 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;-webkit-text-stroke:0;filter:drop-shadow(0 1px 0 #071d3a) drop-shadow(0 2px 1px #0009)}
-.site-header .brand-text strong::before{content:attr(data-text);position:absolute;inset:0;z-index:-1;white-space:nowrap;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:1.8px #008cff;paint-order:stroke fill;filter:drop-shadow(0 0 2px #008cff) drop-shadow(0 0 7px #008cff88);pointer-events:none}
+.site-header .brand-text strong::before{content:attr(data-text);position:absolute;inset:0;z-index:-1;white-space:nowrap;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:1.5px #008cff;paint-order:stroke fill;filter:drop-shadow(0 0 1px #008cff99) drop-shadow(0 0 4px #008cff44);pointer-events:none}
 .site-header .brand-text small{color:#dce5ef;text-shadow:0 0 4px #008cff38}
 .desktop-nav{gap:4px;margin:0 auto}
 .nav-link{padding:9px 15px;border:1px solid transparent;border-radius:9px;font-size:12px;color:#dce3ec;white-space:nowrap;text-shadow:0 1px 0 #fff2}
