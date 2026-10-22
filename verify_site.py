@@ -121,7 +121,9 @@ def main():
     assert (ROOT / "privacidade.html").exists()
     assert (ROOT / "robots.txt").exists()
     assert (ROOT / "sitemap.xml").exists()
-    assert 'https://trdigital.vercel.app/' in html
+    assert '<link rel="canonical" href="https://www.tidireisdigital.com.br/"' in html
+    assert '<meta property="og:url" content="https://www.tidireisdigital.com.br/"' in html
+    assert '<meta property="og:image" content="https://www.tidireisdigital.com.br/assets/og-image.jpg"' in html
     assert 'href="finish.css"' in html
     assert 'id="quoteStatus"' in html
     assert 'href="#orcamento">Iniciar meu projeto' in html
